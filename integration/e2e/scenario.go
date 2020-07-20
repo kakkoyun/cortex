@@ -22,6 +22,7 @@ type Service interface {
 	// It should be ok to Stop and Kill more than once, with next invokes being noop.
 	Kill() error
 	Stop() error
+	KillNow() error
 }
 
 type Scenario struct {
@@ -116,6 +117,23 @@ func (s *Scenario) Stop(services ...Service) error {
 		}
 		if err := service.Stop(); err != nil {
 			return err
+		}
+
+		// Remove the service from the list of services.
+		for i, entry := range s.services {
+			if entry.Name() == service.Name() {
+				s.services = append(s.services[:i], s.services[i+1:]...)
+				break
+			}
+		}
+	}
+	return nil
+}
+
+func (s *Scenario) Unregister(services ...Service) error {
+	for _, service := range services {
+		if !s.isRegistered(service.Name()) {
+			return fmt.Errorf("unable to unregister service %s because it is registered", service.Name())
 		}
 
 		// Remove the service from the list of services.

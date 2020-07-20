@@ -177,6 +177,22 @@ func (s *ConcreteService) Kill() error {
 	return nil
 }
 
+func (s *ConcreteService) KillNow() error {
+	if !s.isExpectedRunning() {
+		return nil
+	}
+
+	logger.Log("Killing", s.name)
+
+	if out, err := RunCommandAndGetOutput("docker", "kill", s.containerName()); err != nil {
+		logger.Log(string(out))
+		return err
+	}
+	s.usedNetworkName = ""
+
+	return nil
+}
+
 // Endpoint returns external (from host perspective) service endpoint (host:port) for given internal port.
 // External means that it will be accessible only from host, but not from docker containers.
 //
