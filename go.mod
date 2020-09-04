@@ -33,6 +33,8 @@ require (
 	github.com/hashicorp/go-sockaddr v1.0.2
 	github.com/hashicorp/memberlist v0.2.2
 	github.com/json-iterator/go v1.1.10
+	github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 // indirect
+	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
 	github.com/lib/pq v1.3.0
 	github.com/mitchellh/go-wordwrap v1.0.0
 	github.com/ncw/swift v1.0.50
@@ -83,3 +85,5 @@ replace google.golang.org/grpc => google.golang.org/grpc v1.29.1
 
 // Using a 3rd-party branch for custom dialer - see https://github.com/bradfitz/gomemcache/pull/86
 replace github.com/bradfitz/gomemcache => github.com/themihai/gomemcache v0.0.0-20180902122335-24332e2d58ab
+
+replace github.com/thanos-io/thanos => github.com/kakkoyun/thanos v0.5.0-rc.0.0.20200904123226-e41252d0430b
